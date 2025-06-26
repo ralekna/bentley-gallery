@@ -1,6 +1,7 @@
 export type Configuration = {
   apiRoot: string;
   imageTileHeight: string;
+  pageSize: number;
 }
 
 export class ConfigurationService {
@@ -10,6 +11,7 @@ export class ConfigurationService {
     this.#configuration = {
       apiRoot: import.meta.env.VITE_PICSUM_API_ROOT ?? 'https://picsum.photos',
       imageTileHeight: import.meta.env.VITE_IMAGE_TILE_HEIGHT ?? '150',
+      pageSize: parseInt(import.meta.env.VITE_PICSUM_PAGE_SIZE ?? '100', 10),
     };
   }
 
