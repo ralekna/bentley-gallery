@@ -64,6 +64,10 @@ body {
         }
       }
     }
+
+    .spacer {
+      flex-grow: 2;
+    }
   }
 
   .image-viewer {

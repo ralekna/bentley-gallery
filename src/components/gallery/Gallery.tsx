@@ -5,7 +5,6 @@ import {ApiServiceContext} from '../../context/ApiServiceContext';
 import {ConfigurationServiceContext} from "../../context/ConfigurationServiceContext.ts";
 import {ImageViewer} from "./ImageViewer.tsx";
 import {getImageUrl} from "../../utils/image-utils.ts";
-import {LoadingIndicator} from "./LoadingIndicator.tsx";
 
 export function Gallery() {
   const apiService = useContext(ApiServiceContext);
@@ -20,7 +19,6 @@ export function Gallery() {
 
   useEffect(() => {
     if (!apiService) return;
-    console.log('Fetching image list');
     apiService.getImageList().then(setPhotos);
   }, [apiService]);
 
@@ -32,8 +30,8 @@ export function Gallery() {
                      onSelect={setSelectedImage}
                      scaledUrl={getImageUrl(imageData, imageHeight, apiRoot)}/>
         ))}
+        <div className="spacer"/>
       </div>
-      <LoadingIndicator loading/>
       {selectedImage && <ImageViewer image={selectedImage} onClose={() => setSelectedImage(null)}/>}
     </div>
   );
