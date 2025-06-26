@@ -1,15 +1,17 @@
-import { Suspense } from 'react';
 import './App.css';
-import { Gallery } from './components/gallery/Gallery';
+import {Gallery} from './components/gallery/Gallery';
+import {useContext} from "react";
+import {ConfigurationServiceContext} from "./context/ConfigurationServiceContext.ts";
+import {ApiService} from "./services/ApiService.ts";
+import {ApiServiceContext} from "./context/ApiServiceContext.ts";
 
 function App() {
+  const configurationService = useContext(ConfigurationServiceContext)
+  const apiService = new ApiService(configurationService.getConfigurationValue('apiRoot'));
   return (
-    <div>
-      <h1>Gallery</h1>
-      <Suspense fallback={<div>Loading images..</div>}>
-        <Gallery />
-      </Suspense>
-    </div>
+    <ApiServiceContext value={apiService}>
+      <Gallery/>
+    </ApiServiceContext>
   );
 }
 

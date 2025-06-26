@@ -1,20 +1,20 @@
-import type { PicsumImageData } from '../store/types';
+import type {PicsumImageData} from '../store/types';
 
 export class ApiService {
-  private apiRoot: string;
+  #apiRoot: string;
 
   constructor(apiRoot: string) {
-    this.apiRoot = apiRoot;
+    this.#apiRoot = apiRoot;
   }
 
-  private fetchUrl<T>(path: string): () => Promise<T> {
-    return async () => {
-      console.log('calling fetch', this.apiRoot + path)
-      return (await fetch(this.apiRoot + path)).json();
-    };
+  public async getImageList(page: number = 1, limit: number = 30): Promise<PicsumImageData[]> {
+    return this.fetchUrl<PicsumImageData[]>(
+      '/v2/list', {page, limit}
+    );
   }
 
-  public getImageList = this.fetchUrl<PicsumImageData[]>(
-    '/v2/list?page=1&limit=30'
-  );
+  private async fetchUrl<T>(path: string, searchParams?: Record<string, string | number | boolean | undefined | null>): Promise<T> {
+    const stringifiedParams = searchParams ? `?${new URLSearchParams(Object.entries(searchParams).map(([key, value]) => [key, String(value)])).toString()}` : '';
+    return (await fetch(`${this.#apiRoot}${path}${stringifiedParams}`)).json();
+  }
 }
