@@ -40,7 +40,7 @@ export function ImageViewer({image, onClose}: ImageViewerProps) {
         <img className={loading ? 'hidden' : ''} src={downloadUrl} alt={author} onLoad={() => setLoading(false)}/>
         <LoadingIndicator loading={loading}/>
         <figcaption>{author}</figcaption>
-        <a href={downloadUrl} download>download</a>
+        <a href={downloadUrl} target="_blank" download>download</a>
       </figure>
     </div>
   </dialog>
