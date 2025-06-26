@@ -3,10 +3,9 @@ import type {PicsumImageData} from '../../store/types';
 import {ImageTile} from './ImageTile.tsx';
 import {ApiServiceContext} from '../../context/ApiServiceContext';
 import {ConfigurationServiceContext} from "../../context/ConfigurationServiceContext.ts";
-
-function getImageUrl(id: string, width: number, height: number, imageHeight: number, apiRoot: string): string {
-  return `${apiRoot}/id/${id}/${Math.round((imageHeight / height) * width)}/${imageHeight}`;
-}
+import {ImageViewer} from "./ImageViewer.tsx";
+import {getImageUrl} from "../../utils/image-utils.ts";
+import {LoadingIndicator} from "./LoadingIndicator.tsx";
 
 export function Gallery() {
   const apiService = useContext(ApiServiceContext);
@@ -16,20 +15,26 @@ export function Gallery() {
   const imageHeight = parseFloat(configurationService.getConfigurationValue('imageTileHeight'));
 
   const [photos, setPhotos] = useState<PicsumImageData[]>([]);
+  const [selectedImage, setSelectedImage] = useState<PicsumImageData | null>(null);
 
 
   useEffect(() => {
     if (!apiService) return;
-    if (photos.length > 0) return;
+    console.log('Fetching image list');
     apiService.getImageList().then(setPhotos);
-  }, [apiService, photos.length]);
+  }, [apiService]);
 
   return (
     <div className="gallery">
-      {photos.map(({id, width, height, author}) => (
-        <ImageTile id={id} author={author}
-                   url={getImageUrl(id, width, height, imageHeight, apiRoot)}/>
-      ))}
+      <div className="tiles">
+        {photos.map((imageData) => (
+          <ImageTile key={imageData.id} image={imageData}
+                     onSelect={setSelectedImage}
+                     scaledUrl={getImageUrl(imageData, imageHeight, apiRoot)}/>
+        ))}
+      </div>
+      <LoadingIndicator loading/>
+      {selectedImage && <ImageViewer image={selectedImage} onClose={() => setSelectedImage(null)}/>}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import {ApiServiceContext} from "./context/ApiServiceContext.ts";
 function App() {
   const configurationService = useContext(ConfigurationServiceContext)
   const apiService = new ApiService(configurationService.getConfigurationValue('apiRoot'));
+
   return (
     <ApiServiceContext value={apiService}>
       <Gallery/>
