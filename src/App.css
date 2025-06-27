@@ -20,7 +20,7 @@ body {
     a {
       text-decoration: none;
       color: var(--font-color);
-      flex: 0.1 1.5 auto;
+      flex: 0.5 1.5 auto;
 
       figure {
         display: flex;
