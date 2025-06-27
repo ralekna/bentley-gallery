@@ -1,24 +1,9 @@
-import {beforeEach, describe, expect, it, vi} from "vitest";
+import {describe, expect, it, vi} from "vitest";
 import {render, type RenderResult} from "vitest-browser-react";
 import {ImageViewer} from "./ImageViewer.tsx";
 import type {PicsumImageData} from "../../store/types.ts";
 
 describe("components/gallery/ImageViewer", () => {
-  beforeEach(() => {
-    // Mock the global window object to prevent errors during tests
-    // Object.defineProperty(window, 'scrollY', {
-    //   writable: true,
-    //   value: 0,
-    // });
-    // Object.defineProperty(window, 'innerHeight', {
-    //   writable: true,
-    //   value: 800,
-    // });
-    // Object.defineProperty(document.documentElement, 'offsetHeight', {
-    //   writable: true,
-    //   value: 2000,
-    // });
-  })
 
   it("should render the image viewer with the correct image data", async () => {
     const imageData: PicsumImageData = {
