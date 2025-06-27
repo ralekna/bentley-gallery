@@ -37,7 +37,7 @@ export function ImageViewer({image, onClose}: ImageViewerProps) {
     <div className="overlay" onClickCapture={onOverlayClick} aria-hidden="true" role="presentation">
       <figure>
         <button role="button" className="close" onClick={onClose}>×</button>
-        <img role="img" className={loading ? 'something' : ''} src={downloadUrl} alt={author}
+        <img role="img" className={loading ? 'hidden' : ''} src={downloadUrl} alt={author}
              onLoad={() => setLoading(false)}/>
         <LoadingIndicator loading={loading}/>
         <figcaption>{author}</figcaption>
